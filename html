@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUANLYCHUOICUNGUNG_V3.0_FINAL</title>
+    <style>
+        :root {
+            --pink-bg: #ffeef2;
+            --accent-pink: #f48fb1;
+            --scm-blue: #2c3e50;
+        }
+
+        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; transition: background 1s ease; }
+
+        /* GIAO DIỆN SCM GIẢ */
+        #scm-interface {
+            background: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header-bar {
+            background: var(--scm-blue);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            font-size: 0.85rem;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .data-table th { background: #ecf0f1; color: var(--scm-blue); }
+        
+        /* NÚT KÍCH HOẠT NGẦM */
+        .btn-check {
+            color: #3498db;
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* GIAO DIỆN CHÚC MỪNG (ẨN) */
+        #birthday-gift {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--pink-bg);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            text-align: center;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 3rem;
+            border-radius: 40px;
+            border: 4px solid white;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 15px 35px rgba(244, 143, 177, 0.2);
+        }
+        h1 { color: #d81b60; font-size: 2.8rem; margin: 0; }
+        .age-text { color: #884d65; font-weight: 500; font-size: 1.2rem; margin-top: 15px; }
+
+        /* HIỆU ỨNG CÁNH HOA/TIM */
+        .item { position: absolute; pointer-events: none; animation: fall 4s linear forwards; }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="scm-interface">
+        <div class="header-bar">
+            <span>Hệ thống ERP: SCM-QUAN-LY-KHO-BP-V7</span>
+            <span>User: Admin_XinhTo</span>
+        </div>
+        <h3>BÁO CÁO PHÂN TÍCH CHỈ SỐ KPI LOGISTICS</h3>
+        <p style="font-size: 0.9rem; color: #666;">Dữ liệu cập nhật: 2026-03-01 | Trạng thái: Đang rà soát</p>
+        
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID Lô hàng</th>
+                    <th>Thuật ngữ mô phỏng</th>
+                    <th>Trạng thái rủi ro</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#SCM2026-001</td>
+                    <td>Hiệu ứng Bullwhip (Roi da)</td>
+                    <td>Thấp</td>
+                    <td><span class="btn-check">Kiểm tra</span></td>
+                </tr>
+                <tr>
+                    <td>#SCM2026-002</td>
+                    <td>Tối ưu hóa Just-In-Time (JIT)</td>
+                    <td>Bình thường</td>
+                    <td><span class="btn-check">Xem log</span></td>
+                </tr>
+                <tr>
+                    <td>#SECRET-MINHTHU</td>
+                    <td><strong>Xác thực Lead-time Minh Thư</strong></td>
+                    <td style="color: red;">Cần kiểm tra ngay!</td>
+                    <td><span class="btn-check" onclick="startSurprise()">CLICK TẠI ĐÂY</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="margin-top: 20px; font-style: italic; font-size: 0.8rem;">
+            * Lưu ý: Mọi sai sót trong việc tính toán vòng quay hàng tồn kho (Inventory Turnover) có thể ảnh hưởng đến lợi nhuận doanh nghiệp.
+        </p>
+    </div>
+
+    <div id="birthday-gift">
+        <div class="card">
+            <h1>🌸 Happy Birthday 🌸</h1>
+            <p style="font-size: 1.5rem; color: #ad1457;">Gửi chị <strong>Minh Thư</strong>!</p>
+            <p class="age-text">Vòng quay thời gian có thể thay đổi,<br>nhưng sự xinh đẹp của chị thì là hằng số. ✨</p>
+            <div style="background: #f48fb1; color: white; padding: 10px 20px; border-radius: 25px; display: inline-block; margin-top: 20px;">
+                Mãi mãi tuổi 20++ 🎂
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function startSurprise() {
+            // Hiệu ứng chuyển cảnh biến mất dần
+            document.getElementById('scm-interface').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('scm-interface').style.display = 'none';
+                const gift = document.getElementById('birthday-gift');
+                gift.style.display = 'flex';
+                
+                // Mưa hoa/tim
+                setInterval(createItem, 150);
+            }, 500);
+        }
+
+        function createItem() {
+            const item = document.createElement('div');
+            item.classList.add('item');
+            const icons = ['🌸', '💖', '🎀', '✨', '🎂'];
+            item.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+            item.style.left = Math.random() * 100 + "vw";
+            item.style.fontSize = (Math.random() * 20 + 15) + "px";
+            item.style.animationDuration = (Math.random() * 2 + 2) + "s";
+            document.body.appendChild(item);
+            setTimeout(() => item.remove(), 4000);
+        }
+    </script>
+</body>
+</html>
