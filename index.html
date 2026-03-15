@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUANLYCHUOICUNGUNG_V3.0_FINAL</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --pink-bg: #ffeef2;
@@ -11,7 +12,7 @@
             --scm-blue: #2c3e50;
         }
 
-        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; transition: background 1s ease; }
+        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; overflow-x: hidden; }
 
         /* GIAO DIỆN SCM GIẢ */
         #scm-interface {
@@ -19,6 +20,7 @@
             color: #333;
             min-height: 100vh;
             padding: 20px;
+            transition: all 0.5s ease;
         }
         .header-bar {
             background: var(--scm-blue);
@@ -33,16 +35,14 @@
             border-collapse: collapse;
             margin-top: 20px;
             background: white;
-            font-size: 0.85rem;
         }
         .data-table th, .data-table td {
             border: 1px solid #ddd;
             padding: 12px;
             text-align: left;
         }
-        .data-table th { background: #ecf0f1; color: var(--scm-blue); }
+        .data-table th { background: #ecf0f1; }
         
-        /* NÚT KÍCH HOẠT NGẦM */
         .btn-check {
             color: #3498db;
             text-decoration: underline;
@@ -61,23 +61,28 @@
             align-items: center;
             z-index: 9999;
             text-align: center;
+            animation: fadeIn 1s ease;
         }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
         .card {
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.8);
             padding: 3rem;
             border-radius: 40px;
-            border: 4px solid white;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 15px 35px rgba(244, 143, 177, 0.2);
+            border: 8px solid white;
+            box-shadow: 0 20px 50px rgba(244, 143, 177, 0.3);
+            max-width: 80%;
         }
-        h1 { color: #d81b60; font-size: 2.8rem; margin: 0; }
-        .age-text { color: #884d65; font-weight: 500; font-size: 1.2rem; margin-top: 15px; }
-
-        /* HIỆU ỨNG CÁNH HOA/TIM */
-        .item { position: absolute; pointer-events: none; animation: fall 4s linear forwards; }
-        @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        h1 { color: #d81b60; font-size: 3rem; margin: 0; text-shadow: 2px 2px white; }
+        .message { color: #884d65; font-size: 1.3rem; line-height: 1.6; margin: 20px 0; }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
         }
     </style>
 </head>
@@ -85,82 +90,72 @@
 
     <div id="scm-interface">
         <div class="header-bar">
-            <span>Hệ thống ERP: SCM-QUAN-LY-KHO-BP-V7</span>
+            <span>Hệ thống ERP: SCM-QUAN-LY-KHO-V7</span>
             <span>User: Admin_XinhTo</span>
         </div>
         <h3>BÁO CÁO PHÂN TÍCH CHỈ SỐ KPI LOGISTICS</h3>
-        <p style="font-size: 0.9rem; color: #666;">Dữ liệu cập nhật: 2026-03-01 | Trạng thái: Đang rà soát</p>
-        
         <table class="data-table">
             <thead>
                 <tr>
                     <th>ID Lô hàng</th>
-                    <th>Thuật ngữ mô phỏng</th>
-                    <th>Trạng thái rủi ro</th>
+                    <th>Thông tin chi tiết</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>#SCM2026-001</td>
-                    <td>Hiệu ứng Bullwhip (Roi da)</td>
-                    <td>Thấp</td>
+                    <td>#SCM-2026-01</td>
+                    <td>Tối ưu hóa Bullwhip Effect</td>
                     <td><span class="btn-check">Kiểm tra</span></td>
-                </tr>
-                <tr>
-                    <td>#SCM2026-002</td>
-                    <td>Tối ưu hóa Just-In-Time (JIT)</td>
-                    <td>Bình thường</td>
-                    <td><span class="btn-check">Xem log</span></td>
                 </tr>
                 <tr>
                     <td>#SECRET-MINHTHU</td>
                     <td><strong>Xác thực Lead-time Minh Thư</strong></td>
-                    <td style="color: red;">Cần kiểm tra ngay!</td>
                     <td><span class="btn-check" onclick="startSurprise()">CLICK TẠI ĐÂY</span></td>
                 </tr>
             </tbody>
         </table>
-        <p style="margin-top: 20px; font-style: italic; font-size: 0.8rem;">
-            * Lưu ý: Mọi sai sót trong việc tính toán vòng quay hàng tồn kho (Inventory Turnover) có thể ảnh hưởng đến lợi nhuận doanh nghiệp.
-        </p>
     </div>
 
     <div id="birthday-gift">
-        <div class="card">
-            <h1>🌸 Happy Birthday 🌸</h1>
-            <p style="font-size: 1.5rem; color: #ad1457;">Gửi chị <strong>Minh Thư</strong>!</p>
-            <p class="age-text">Vòng quay thời gian có thể thay đổi,<br>nhưng sự xinh đẹp của chị thì là hằng số. ✨</p>
-            <div style="background: #f48fb1; color: white; padding: 10px 20px; border-radius: 25px; display: inline-block; margin-top: 20px;">
-                Mãi mãi tuổi 20++ 🎂
+        <div class="card floating">
+            <h1>🌸 Happy Birthday! 🌸</h1>
+            <div class="message">
+                Chúc <strong>Minh Thư</strong> của tui sinh nhật siêu rực rỡ nhé!<br>
+                Mong cậu luôn xinh đẹp, cười nhiều hơn mỗi ngày và sớm đạt được mọi KPI của cuộc đời.<br>
+                Quên cái đống Chuỗi cung ứng này đi, đi quẩy thôi bạn tui ơiiii! 🎀✨
+            </div>
+            <div style="background: #f48fb1; color: white; padding: 12px 30px; border-radius: 30px; font-weight: bold; display: inline-block;">
+                Mãi mãi tuổi 20++ nha 🎂
             </div>
         </div>
     </div>
 
     <script>
         function startSurprise() {
-            // Hiệu ứng chuyển cảnh biến mất dần
+            // Hiệu ứng bùm chiếu (Confetti)
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) { return clearInterval(interval); }
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+
+            // Chuyển giao diện
             document.getElementById('scm-interface').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('scm-interface').style.display = 'none';
-                const gift = document.getElementById('birthday-gift');
-                gift.style.display = 'flex';
-                
-                // Mưa hoa/tim
-                setInterval(createItem, 150);
+                document.getElementById('birthday-gift').style.display = 'flex';
             }, 500);
-        }
-
-        function createItem() {
-            const item = document.createElement('div');
-            item.classList.add('item');
-            const icons = ['🌸', '💖', '🎀', '✨', '🎂'];
-            item.innerHTML = icons[Math.floor(Math.random() * icons.length)];
-            item.style.left = Math.random() * 100 + "vw";
-            item.style.fontSize = (Math.random() * 20 + 15) + "px";
-            item.style.animationDuration = (Math.random() * 2 + 2) + "s";
-            document.body.appendChild(item);
-            setTimeout(() => item.remove(), 4000);
         }
     </script>
 </body>
